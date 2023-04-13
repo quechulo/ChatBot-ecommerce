@@ -5,8 +5,8 @@
 2023-ORD-005 - W trakcie realizacji - Bluza z kapturem, legginsy, sneakersy
 2023-ORD-006 - Zakończone - Marynarka, koszula biała, spodnie garniturowe
 2023-ORD-007 - Złożone - Kombinezon z dżinsu, klapki, plecak
-2023-ORD-008 - W trakcie realizacji - Kurtka skórzana, t-shirt basic, spodnie jeansowe
-2023-ORD-009 - Zakończone - Kamizelka sportowa, buty treningowe, spodnie dresowe
+2023-ORD-008 - Status: W trakcie realizacji / Przedmioty: Kurtka skórzana, t-shirt basic, spodnie jeansowe
+2023-ORD-009 - Status: Zakończone / Przedmioty: Kamizelka sportowa, buty treningowe, spodnie dresowe
 2023-ORD-010 - Anulowane - Sukienka w kwiaty, sandały, torebka skórzana
 2023-ORD-011 - Złożone - Kurtka puchowa, szalik, rękawiczki
 2023-ORD-012 - W trakcie realizacji - Koszulka polo, spodnie dresowe, trampki
