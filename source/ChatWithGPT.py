@@ -3,6 +3,7 @@ import openai
 # load and set our key
 openai.api_key = open("../key.txt", "r").read().strip("\n")
 
+
 class ChatWithGPT:
     def __init__(self):
         self.message_log = []
@@ -15,7 +16,7 @@ class ChatWithGPT:
 
     def classify_intent(self, question):
         quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię."
-        intention = self.ask_chat_gpt(quest)
+        intention = self.ask_chat_gpt(quest, write_log=False)
         intention = intention.lower()
         if "buty" in intention:
             intention = 'buty'
@@ -33,7 +34,13 @@ class ChatWithGPT:
         self.intent = intention
         return intention
 
-    def ask_chat_gpt(self, question):
+    def full_answer(self, question, answer):
+        quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
+        full_ans = self.ask_chat_gpt(quest)
+
+        return full_ans
+
+    def ask_chat_gpt(self, question, write_log=True):
         try:
             question = self.format_query(question)
         except:
@@ -41,13 +48,17 @@ class ChatWithGPT:
         self.message_log.append({"role": "user", "content": f"{question}"})
         try:
             completion = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo", # this is "ChatGPT" $0.002 per 1k tokens
-            messages=self.message_log
+                model="gpt-3.5-turbo",  # this is "ChatGPT" $0.002 per 1k tokens
+                messages=self.message_log
             )
         except:
             return "Unfortunately Chatgpt is unavailable right now :("
 
         assistant_reply = completion.choices[0].message.content
         self.message_log.append({"role": "assistant", "content": f"{assistant_reply}"})
+
+        if not write_log:
+            self.message_log.pop()
+            self.message_log.pop()
 
         return assistant_reply

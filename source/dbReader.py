@@ -12,9 +12,9 @@ def add_dict_to_file(file_path, dict_content):
     gender = {
         'male': 'męskie',
         'female': 'damskie',
-        'unisex': 'damskie i męskie, unisex'
+        'unisex': 'unisex'
     }
-    line_to_append = f"{gender[product['gender']]} {category[product['type_of_product']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*f{product['link']}).\n"
+    line_to_append = f"{category[product['type_of_product']]} {gender[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*{product['link']}*link*).\n"
     print(line_to_append)
     with open(file_path, "a", encoding='utf-8') as file:
         file.write(line_to_append)
