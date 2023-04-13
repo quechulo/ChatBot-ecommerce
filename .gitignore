@@ -1,5 +1,7 @@
 /source/.idea
 /source/bert-base-multi
+__pycache__/
+/source/__pycache__/
 .idea
 key.txt
 passwords.py
