@@ -1,20 +1,39 @@
 from pymongo import MongoClient
 from passwords import password
-import json
 
 database = 'products'
+collection = 'clothes'
 
-def add_dict_to_file(file_path, dict_content):
+def add_dict_to_file(file_path, product):
     category = {
         'sneakers': 'buty',
         'flipflops': 'klapki',
+        'jacket': 'kurtka',
+        'tracksuit': 'dres',
+        'tshirt': 'koszulka',
     }
-    gender = {
+    gender_e = {
         'male': 'męskie',
         'female': 'damskie',
         'unisex': 'unisex'
     }
-    line_to_append = f"{category[product['type_of_product']]} {gender[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*{product['link']}*link*).\n"
+    gender_a = {
+        'male': 'męska',
+        'female': 'damska',
+        'unisex': 'unisex'
+    }
+    gender_i = {
+        'male': 'męski',
+        'female': 'damski',
+        'unisex': 'unisex'
+    }
+
+    if product['type_of_product'] == 'sneakers' or product['type_of_product'] == 'flipflops':
+        line_to_append = f"{category[product['type_of_product']]} {gender_e[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*{product['link']}*link*).\n"
+    elif product['type_of_product'] == 'tracksuit':
+        line_to_append = f"{category[product['type_of_product']]} {gender_i[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*{product['link']}*link*).\n"
+    else:
+        line_to_append = f"{category[product['type_of_product']]} {gender_a[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*{product['link']}*link*).\n"
     print(line_to_append)
     with open(file_path, "a", encoding='utf-8') as file:
         file.write(line_to_append)
@@ -29,8 +48,8 @@ except Exception as e:
 
 # Access the database and collection
 try:
-    db = client.get_database(f"{database}")
-    collection = db.get_collection("shoes")
+    db = client.get_database(database)
+    collection = db.get_collection(collection)
     print("Database and collection accessed successfully!")
 except Exception as e:
     print("Unable to access database or collection: ", e)
@@ -54,10 +73,10 @@ try:
             'color': [doc['color']],
             'gender': doc['gender'],
             'price': doc['price'],
-            'link': 'link-to-product',  # TODO add link to product
+            'link': doc['_id'],  # TODO add link to product
         }
 
-        add_dict_to_file('shoes.txt', product)
+        add_dict_to_file('clothes.txt', product)
 
 
 except Exception as e:
