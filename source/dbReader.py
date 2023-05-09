@@ -84,7 +84,31 @@ def write_about_to_file(documents, file_name):
 
 
 def add_about_to_file(file_path, content):
-    line_to_append = f"{content['contact']} {content['address']} {content['email']} {content['hello_text']},  (*link*{content['link']}*link*).\n"
+    line_to_append = f"{content['hello_text']}.\nMożesz skontaktować się z nami od poniedziłku do piątku w godzinach 9.00-16.00 dzwoniąc pod numer: {content['contact']}, bądź pisząc maila na adres: {content['email']}\nBiuro stacjonarne znajduje się pod adresem: {content['address']}\n(*link*{content['link']}*link*)\n"
+    with open(file_path, "a", encoding='utf-8') as file:
+        file.write(line_to_append)
+
+
+def write_complaint_to_file(documents, file_name):
+    try:
+        # Open the file in write mode
+        with open(file_name, "w") as file:
+            # Use the truncate() method to erase the contents
+            file.truncate()
+        # Iterate through each document and print its contents
+        for doc in documents:
+            content = {
+                'content': doc['content'],
+                'link': 'http://localhost:3000/zwroty',
+            }
+
+            add_complaint_to_file(file_name, content)
+    except Exception as e:
+        print("Error processing document: ", e)
+
+
+def add_complaint_to_file(file_path, content):
+    line_to_append = f"{content['content']}(*link*{content['link']}*link*)\n"
     with open(file_path, "a", encoding='utf-8') as file:
         file.write(line_to_append)
 
@@ -158,6 +182,9 @@ if __name__ == '__main__':
 
     about = get_all_doc('info', 'about')
     write_about_to_file(about, 'about.txt')
+
+    complaint = get_all_doc('info', 'complaints')
+    write_complaint_to_file(complaint, 'complaint.txt')
 
     # test insertion to db:
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})
