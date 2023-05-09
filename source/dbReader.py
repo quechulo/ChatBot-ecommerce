@@ -1,24 +1,56 @@
 from pymongo import MongoClient
-from passwords import password
+from passwords import password, password_write
 
-database = 'products'
-collection = 'clothes'
 
-def connect_db(database, collection):
+def insert_conversation_to_db(database, collection_name, document):
+    client = get_connection_writer()
+    collection = access_db_collection(client, database, collection_name)
+
+    try:
+        collection.insert_one(document)
+        print("Document inserted successfully!")
+        return
+
+    except Exception as e:
+        print("Unable to insert documents: ", e)
+
+
+def get_connection_writer():
+    try:
+        client = MongoClient(
+            f"mongodb+srv://Admindb:{password_write}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority")
+        print("Connected successfully!")
+        return client
+
+    except Exception as e:
+        print("Unable to connect to the cluster: ", e)
+
+
+def get_connection_reader():
     try:
         client = MongoClient(
             f"mongodb+srv://pyReader:{password}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority")
         print("Connected successfully!")
+        return client
+
     except Exception as e:
         print("Unable to connect to the cluster: ", e)
 
+
+def access_db_collection(client, database, collection_name):
     # Access the database and collection
     try:
         db = client.get_database(database)
-        collection = db.get_collection(collection)
+        collection = db.get_collection(collection_name)
         print("Database and collection accessed successfully!")
+        return collection
     except Exception as e:
         print("Unable to access database or collection: ", e)
+
+
+def get_all_doc(database, collection_name):
+    client = get_connection_reader()
+    collection = access_db_collection(client, database, collection_name)
 
     # Retrieve all documents in the collection
     try:
@@ -28,6 +60,33 @@ def connect_db(database, collection):
 
     except Exception as e:
         print("Unable to retrieve documents: ", e)
+
+
+def write_about_to_file(documents, file_name):
+    try:
+        # Open the file in write mode
+        with open(file_name, "w") as file:
+            # Use the truncate() method to erase the contents
+            file.truncate()
+        # Iterate through each document and print its contents
+        for doc in documents:
+            content = {
+                'contact': doc['contact'],
+                'address': doc['address'],
+                'email': doc['email'],
+                'hello_text': doc['hello_text'],
+                'link': 'http://localhost:3000/about',
+            }
+
+            add_about_to_file(file_name, content)
+    except Exception as e:
+        print("Error processing document: ", e)
+
+
+def add_about_to_file(file_path, content):
+    line_to_append = f"{content['contact']} {content['address']} {content['email']} {content['hello_text']},  (*link*{content['link']}*link*).\n"
+    with open(file_path, "a", encoding='utf-8') as file:
+        file.write(line_to_append)
 
 
 def write_to_file(documents, file_name):
@@ -47,10 +106,10 @@ def write_to_file(documents, file_name):
                 'color': [doc['color']],
                 'gender': doc['gender'],
                 'price': doc['price'],
-                'link': doc['_id'],  # TODO add link to product
+                'link': doc['_id'],
             }
-
             add_dict_to_file(file_name, product)
+
     except Exception as e:
         print("Error processing document: ", e)
 
@@ -92,7 +151,13 @@ def add_dict_to_file(file_path, product):
 
 # Set up the connection to the MongoDB Atlas database
 if __name__ == '__main__':
-    shoes = connect_db('products', 'shoes')
-    write_to_file(shoes, 'shoes.txt')
-    clothes = connect_db('products', 'clothes')
-    write_to_file(clothes, 'clothes.txt')
+    # shoes = get_all_doc('products', 'shoes')
+    # write_to_file(shoes, 'shoes.txt')
+    # clothes = get_all_doc('products', 'clothes')
+    # write_to_file(clothes, 'clothes.txt')
+
+    about = get_all_doc('info', 'about')
+    write_about_to_file(about, 'about.txt')
+
+    # test insertion to db:
+    # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})

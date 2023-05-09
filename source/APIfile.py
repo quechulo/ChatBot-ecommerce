@@ -4,6 +4,7 @@ from flask_cors import CORS
 from ChatWithGPT import ChatWithGPT
 from BERTModel import BERTModel
 from loadContexts import load_shoes, load_clothes
+from dbReader import insert_conversation_to_db
 
 Session = ChatWithGPT()
 Bert = BERTModel()
@@ -39,6 +40,7 @@ def send_message():
 
 @app.route('/receive', methods=['GET'])
 def receive_messages():
+    insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     return jsonify({'messages': messages})
 
 if __name__ == '__main__':

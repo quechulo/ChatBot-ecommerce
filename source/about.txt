@@ -1,0 +1,2 @@
+123-456-789 00-000 Zakupowo 123, Mazowieckie, Polska bok@buystuff.pl Witamy w naszym sklepie Buy Stuff. W naszej ofercie posiadamy wiele markowych butów i ubrań. Oferujemy najlepsze ceny i staramy się obsługiwać klienta na najwyższym poziomie.,
+(*link*http://localhost:3000/about*link*).
