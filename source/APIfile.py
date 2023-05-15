@@ -29,7 +29,7 @@ def send_message():
         data = load_clothes()
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
     else:
-        print('Intent was not shoes :( (intent: ' + intent)
+        print('Intent was not buty nor ubrania :( (intent: ' + intent)
 
 
     messages.append(answer)
@@ -40,7 +40,7 @@ def send_message():
 
 @app.route('/receive', methods=['GET'])
 def receive_messages():
-    insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
+    # insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     return jsonify({'messages': messages})
 
 if __name__ == '__main__':

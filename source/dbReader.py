@@ -18,7 +18,7 @@ def insert_conversation_to_db(database, collection_name, document):
 def get_connection_writer():
     try:
         client = MongoClient(
-            f"mongodb+srv://Admindb:{password_write}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority")
+            f"mongodb+srv://pyWriter:{password_write}@cluster0.bmmwhmg.mongodb.net/?retryWrites=true&w=majority")
         print("Connected successfully!")
         return client
 
@@ -182,9 +182,9 @@ if __name__ == '__main__':
 
     about = get_all_doc('info', 'about')
     write_about_to_file(about, 'about.txt')
-
-    complaint = get_all_doc('info', 'complaints')
-    write_complaint_to_file(complaint, 'complaint.txt')
+    #
+    # complaint = get_all_doc('info', 'complaints')
+    # write_complaint_to_file(complaint, 'complaint.txt')
 
     # test insertion to db:
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})
