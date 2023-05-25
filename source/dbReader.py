@@ -175,16 +175,17 @@ def add_dict_to_file(file_path, product):
 
 # Set up the connection to the MongoDB Atlas database
 if __name__ == '__main__':
-    # shoes = get_all_doc('products', 'shoes')
-    # write_to_file(shoes, 'shoes.txt')
-    # clothes = get_all_doc('products', 'clothes')
-    # write_to_file(clothes, 'clothes.txt')
+    shoes = get_all_doc('products', 'shoes')
+    write_to_file(shoes, 'shoes.txt')
+
+    clothes = get_all_doc('products', 'clothes')
+    write_to_file(clothes, 'clothes.txt')
 
     about = get_all_doc('info', 'about')
     write_about_to_file(about, 'about.txt')
-    #
-    # complaint = get_all_doc('info', 'complaints')
-    # write_complaint_to_file(complaint, 'complaint.txt')
+
+    complaint = get_all_doc('info', 'complaints')
+    write_complaint_to_file(complaint, 'complaint.txt')
 
     # test insertion to db:
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})
