@@ -1,4 +1,4 @@
 Witamy w naszym sklepie Buy Stuff. W naszej ofercie posiadamy wiele markowych butów i ubrań. Oferujemy najlepsze ceny i staramy się obsługiwać klienta na najwyższym poziomie..
-Możesz skontaktować się z nami od poniedziłku do piątku w godzinach 9.00-16.00 dzwoniąc pod numer: 123-456-789, bądź pisząc maila na adres: bok@buystuff.pl
+Możesz skontaktować się z nami od poniedziłku do piątku w godzinach 9.00-16.00 dzwoniąc pod numer: 123-456-789, bądź pisząc maila na adres: bok@buystuff.pl. Oferujemy darmowe zwroty do 14-dni po odbiorze zamówienia.
 Biuro stacjonarne znajduje się pod adresem: 00-000 Zakupowo 123, Mazowieckie, Polska
 (*link*http://localhost:3000/about*link*)

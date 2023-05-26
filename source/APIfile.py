@@ -51,19 +51,19 @@ def send_fresh_message():
         answer = Bert.get_multiple_answers(context=data, query=message)
     elif Session.intent == 'informacje o sklepie':
         data = about
-        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, product_link=True)
+        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'zamówienia':
         data = orders
-        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, product_link=False)
+        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=False)
     elif Session.intent == 'reklamacje':
         data = complaint
-        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, product_link=True)
+        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'inne':
         answer = 'Niestety nie jestem w stanie odpowiedzieć na to pytanie, proszę zadaj je w inny sposób, albo zapytaj o coś innego.'
     else:
         # handling GPT unavailability case
         data = all_context
-        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, product_link=True)
+        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
         messages.append([answer, 'bot'])
         return jsonify({'query': message,
                         'answer': answer})
@@ -96,6 +96,7 @@ def send_message():
             Bert.answer_idx += 1
     else:
         answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=False)
+        answer = Session.full_answer(message, answer)
 
     messages.append([answer, 'bot'])
     return jsonify({'query': message,
