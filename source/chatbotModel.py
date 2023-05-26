@@ -1,5 +1,5 @@
 from ChatWithGPT import ChatWithGPT
-from BERTModel import BERTModel
+from source.BERTModel import BERTModel
 from loadContexts import load_shoes
 
 import time

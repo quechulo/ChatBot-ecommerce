@@ -1,6 +1,6 @@
 def load_file(filename):
     with open(filename, 'r', encoding="utf-8") as file:
-        data = file.read().replace('\n', ' ')
+        data = file.read()
     return data
 
 

@@ -7,6 +7,7 @@ openai.api_key = open("../key.txt", "r").read().strip("\n")
 class ChatWithGPT:
     def __init__(self):
         self.message_log = []
+        self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta."})
         # tutaj dodac wiadomosc aby chatgpt wczul sie w role wirtualnego asystenta na stronie ecommerce
         self.intent = None
 
@@ -36,7 +37,7 @@ class ChatWithGPT:
 
     def full_answer(self, question, answer):
         quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
-        full_ans = self.ask_chat_gpt(quest)
+        full_ans = self.ask_chat_gpt(quest, write_log=False)
         if "available" in full_ans:
             print("GPT was not able to create full answer")
             return answer

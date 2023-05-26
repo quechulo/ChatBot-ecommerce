@@ -4,23 +4,35 @@ from flask_cors import CORS
 from ChatWithGPT import ChatWithGPT
 from BERTModel import BERTModel
 from loadContexts import load_file, load_all_files
-from dbReader import insert_conversation_to_db
 
-Session = ChatWithGPT()
-Bert = BERTModel()
+
 
 app = Flask(__name__)
 CORS(app)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}})
 
-messages = []
-# loading all contexts for BERT
-shoes = load_file('shoes.txt')
-clothes = load_file('clothes.txt')
-about = load_file('about.txt')
-orders = load_file('orders.txt')
-complaint = load_file('complaint.txt')
-all_context = load_all_files('all_context.txt')
+
+def init_new_context():
+    global Session
+    Session = ChatWithGPT()
+    global Bert
+    Bert = BERTModel()
+    global messages
+    messages = []
+    # loading all contexts for BERT
+    global shoes
+    shoes = load_file('shoes.txt')
+    global clothes
+    clothes = load_file('clothes.txt')
+    global about
+    about = load_file('about.txt')
+    global orders
+    orders = load_file('orders.txt')
+    global complaint
+    complaint = load_file('complaint.txt')
+    global all_context
+    all_context = load_all_files('all_context.txt')
+
 
 @app.route('/send', methods=['POST'])
 def send_message():
@@ -62,10 +74,14 @@ def send_message():
     return jsonify({'query': message,
                     'answer': answer})
 
+
 @app.route('/receive', methods=['GET'])
 def receive_messages():
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     return jsonify({'messages': messages})
 
+
 if __name__ == '__main__':
+    init_new_context()
     app.run(debug=True)
+
