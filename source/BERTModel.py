@@ -12,8 +12,10 @@ class BERTModel:
         print("Device:", self.device)
         self.qa_pipeline = torch.load('bert-base-multi')
         self.answers = []
+        self.answer_idx = 0
         self.end_of_ans = 0
         self.intent = None
+        self.context = None
 
     def get_answer(self, context, query, only_ans=True, product_link=False):
         result = self.qa_pipeline({
@@ -22,6 +24,23 @@ class BERTModel:
         })
         start_idx = int(result['end'])
         self.end_of_ans = start_idx
+
+        cut_start = int(result['start'])
+        cut_end = int(result['end'])
+        char = context[cut_start]
+        while (char != "\n") and cut_start > 0:
+            cut_start -= 1
+            char = context[cut_start]
+        char = context[cut_end]
+        while (char != "*") and (cut_start < len(context) - 1):
+            cut_end += 1
+            char = context[cut_end]
+
+        if context[cut_start] == "\n":
+            cut_start += 1
+
+        result['answer'] = context[cut_start:cut_end - 5]
+
         if product_link:
             link_to_product = context[start_idx:].split('*link*')[1]
             result['answer'] = result['answer'] + ' link do produktu: ' + link_to_product
@@ -39,7 +58,7 @@ class BERTModel:
         i = 0
         while score > 0.0001:
             answer = self.get_answer(context, query, only_ans=False, product_link=True)
-            answers.append(answer['answer'])
+            self.answers.append(answer['answer'])
 
             start_idx = int(answer['start'])
             end_idx = int(answer['end'])
@@ -58,21 +77,33 @@ class BERTModel:
                 char = context[cut_end]
 
             context = context[:cut_start] + context[cut_end:]
-            print(context)
-            print(f"Answer: -{score}---------- ", answer)
+            print(f"Answer: {score}---------- ", answer)
             i += 1
-        if len(answers) > 1:
-            self.answers = answers[:-1]
-            return answers[:-1]
-        else:
-            self.answers = answers
-            return answers
+        if len(self.answers) > 1:
+            self.answers = self.answers[:-1]
 
+        return self.answers
+
+    def get_simple_answer(self, context, query, only_ans=False, page_link=True):
+        result = self.qa_pipeline({
+            'context': context,
+            'question': query
+        })
+        start_idx = int(result['end'])
+
+        if page_link:
+            link_to_page = context[start_idx:].split('*link*')[1]
+            result['answer'] = result['answer'] + ' link do strony: ' + link_to_page
+
+        if only_ans:
+            return result['answer']
+        else:
+            return result
 
 if __name__ == '__main__':
     Bert = BERTModel()
     message = 'Szukam butów damskich'
     data = load_file('shoes.txt')
 
-    answers = Bert.get_multiple_answers(context=data, query=message)
-    print("Answers: \n", answers)
+    Bert.get_multiple_answers(context=data, query=message)
+    print("Answers: \n", Bert.answers)
