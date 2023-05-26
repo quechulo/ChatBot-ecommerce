@@ -14,7 +14,13 @@ CORS(app)
 CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}})
 
 messages = []
-
+# loading all contexts for BERT
+shoes = load_file('shoes.txt')
+clothes = load_file('clothes.txt')
+about = load_file('about.txt')
+orders = load_file('orders.txt')
+complaint = load_file('complaint.txt')
+all_context = load_all_files('all_context.txt')
 
 @app.route('/send', methods=['POST'])
 def send_message():
@@ -26,28 +32,33 @@ def send_message():
     intent = Session.classify_intent(message)
     print(intent)
     if Session.intent == 'buty':
-        data = load_file('shoes.txt')
+        data = shoes
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
     elif Session.intent == 'ubrania':
-        data = load_file('clothes.txt')
+        data = clothes
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
     elif Session.intent == 'informacje o sklepie':
-        data = load_file('about.txt')
+        data = about
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
     elif Session.intent == 'zamówienia':
-        data = load_file('orders.txt')
+        data = orders
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=False)
     elif Session.intent == 'reklamacje':
-        data = load_file('complaint.txt')
+        data = complaint
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
     elif Session.intent == 'inne':
         answer = 'Niestety nie jestem w stanie odpowiedzieć na to pytanie, proszę zadaj je w inny sposób, albo zapytaj o coś innego.'
     else:
-        data = load_all_files('all_context.txt')
+        # handling GPT unavailability case
+        data = all_context
         answer = Bert.get_answer(context=data, query=message, only_ans=True, product_link=True)
+        messages.append([answer, 'bot'])
+        return jsonify({'query': message,
+                        'answer': answer})
+
+    answer = Session.full_answer(message, answer)
 
     messages.append([answer, 'bot'])
-
     return jsonify({'query': message,
                     'answer': answer})
 

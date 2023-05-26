@@ -20,5 +20,5 @@ def load_all_files(input_files):
         all_context = load_file(result_filename)
         return all_context
 
-    except IOError:
+    except:
         print("An error occurred while creating All Context file.")

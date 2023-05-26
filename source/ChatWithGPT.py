@@ -37,6 +37,9 @@ class ChatWithGPT:
     def full_answer(self, question, answer):
         quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
         full_ans = self.ask_chat_gpt(quest)
+        if "available" in full_ans:
+            print("GPT was not able to create full answer")
+            return answer
 
         return full_ans
 
