@@ -71,7 +71,7 @@ def send_fresh_message():
     Bert.context = data
     if type(answer) == list:
         answer = Session.full_answer(message, answer[Bert.answer_idx])
-        Bert.answer_idx += 1
+        Bert.answers.pop(Bert.answer_idx)
     else:
         answer = Session.full_answer(message, answer)
 
@@ -88,12 +88,13 @@ def send_message():
     messages.append([message, sender])
 
     context = Bert.context
-    if len(Bert.answers):
-        if Bert.answer_idx >= len(Bert.answers):
+    if type(Bert.answers) == list and len(Bert.answers):
+        if not len(Bert.answers):
             answer = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
         else:
-            answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
-            Bert.answer_idx += 1
+            answer = Session.get_most_suitable_ans(message, Bert.answers)
+            # answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
+            # Bert.answer_idx += 1
     else:
         answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=False)
         answer = Session.full_answer(message, answer)

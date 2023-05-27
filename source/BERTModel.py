@@ -55,7 +55,6 @@ class BERTModel:
         # Clear previous messages
         self.answers = []
 
-        i = 0
         while score > 0.0001:
             answer = self.get_answer(context, query, only_ans=False, product_link=True)
             self.answers.append(answer['answer'])
@@ -78,7 +77,7 @@ class BERTModel:
 
             context = context[:cut_start] + context[cut_end:]
             print(f"Answer: {score}---------- ", answer)
-            i += 1
+
         if len(self.answers) > 1:
             self.answers = self.answers[:-1]
 

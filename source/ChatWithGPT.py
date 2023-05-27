@@ -37,12 +37,20 @@ class ChatWithGPT:
 
     def full_answer(self, question, answer):
         quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
-        full_ans = self.ask_chat_gpt(quest, write_log=False)
+        full_ans = self.ask_chat_gpt(quest, write_log=True)
         if "available" in full_ans:
             print("GPT was not able to create full answer")
             return answer
 
         return full_ans
+
+    def get_most_suitable_ans(self, question, answers):
+        quest = f"Odpowiedz na pytanie '{question}' pełnym zdaniem, wybierając spośród odpowiedzi: '{answers}' jedną najbardziej dopasowaną do pytania."
+        ans = self.ask_chat_gpt(quest, write_log=True)
+        if "available" in ans:
+            print("GPT was not able to get most suitable answer")
+            return answers[0]
+        return ans
 
     def ask_chat_gpt(self, question, write_log=True):
         try:
