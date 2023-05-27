@@ -127,7 +127,7 @@ def write_to_file(documents, file_name):
                 'description': doc['description'],
                 'name': doc['name'],
                 'photos': doc['photos'],
-                'color': [doc['color']],
+                'color': doc['color'],
                 'gender': doc['gender'],
                 'price': doc['price'],
                 'link': doc['_id'],
@@ -163,11 +163,11 @@ def add_dict_to_file(file_path, product):
     }
 
     if product['type_of_product'] == 'sneakers' or product['type_of_product'] == 'flipflops':
-        line_to_append = f"{category[product['type_of_product']]} {gender_e[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/buty/{product['link']}*link*).\n"
+        line_to_append = f"{category[product['type_of_product']]} {gender_e[product['gender']]} {product['color']} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/buty/{product['link']}*link*).\n"
     elif product['type_of_product'] == 'tracksuit':
-        line_to_append = f"{category[product['type_of_product']]} {gender_i[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/ubrania/{product['link']}*link*).\n"
+        line_to_append = f"{category[product['type_of_product']]} {gender_i[product['gender']]} {product['color']} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/ubrania/{product['link']}*link*).\n"
     else:
-        line_to_append = f"{category[product['type_of_product']]} {gender_a[product['gender']]} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/ubrania/{product['link']}*link*).\n"
+        line_to_append = f"{category[product['type_of_product']]} {gender_a[product['gender']]} {product['color']} {product['brand']} {product['name']} cena {product['price']}PLN ,  (*link*http://localhost:3000/produkty/ubrania/{product['link']}*link*).\n"
     print(line_to_append)
     with open(file_path, "a", encoding='utf-8') as file:
         file.write(line_to_append)

@@ -99,10 +99,10 @@ class BERTModel:
         else:
             return result
 
-if __name__ == '__main__':
-    Bert = BERTModel()
-    message = 'Szukam butów damskich'
-    data = load_file('shoes.txt')
-
-    Bert.get_multiple_answers(context=data, query=message)
-    print("Answers: \n", Bert.answers)
+# if __name__ == '__main__':
+#     Bert = BERTModel()
+#     message = 'Szukam butów damskich'
+#     data = load_file('shoes.txt')
+#
+#     Bert.get_multiple_answers(context=data, query=message)
+#     print("Answers: \n", Bert.answers)
