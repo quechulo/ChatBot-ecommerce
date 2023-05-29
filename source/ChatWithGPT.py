@@ -35,6 +35,21 @@ class ChatWithGPT:
         self.intent = intention
         return intention
 
+    def is_question_about_shop(self, question):
+        quest = f"Aktualny temat rozmowy to: {self.intent}. Odpowiedz tak lub nie, czy pytanie '{question}' obejmuje kompetencje chatbota na stronie ecommerce rozmawiając na podany wcześniej temat? W odpowiedzi napisz jedynie tak lub nie."
+        answer = self.ask_chat_gpt(quest, write_log=False)
+        answer = answer.lower()
+        print("is_question_about_shop: ", answer)
+        if "nie" in answer:
+            answer = False
+        elif "tak" in answer:
+            answer = True
+        else:
+            answer = False
+
+        print("is_question_about_shop ",answer)
+        return answer
+
     def full_answer(self, question, answer):
         quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
         full_ans = self.ask_chat_gpt(quest, write_log=True)

@@ -70,8 +70,8 @@ def send_fresh_message():
 
     Bert.context = data
     if type(answer) == list:
-        answer = Session.full_answer(message, answer[Bert.answer_idx])
-        Bert.answers.pop(Bert.answer_idx)
+        answer = Session.full_answer(message, answer[Bert.answers_idx])
+        Bert.answers.pop(Bert.answers_idx)
     else:
         answer = Session.full_answer(message, answer)
 
@@ -88,13 +88,16 @@ def send_message():
     messages.append([message, sender])
 
     context = Bert.context
-    if type(Bert.answers) == list and len(Bert.answers):
-        if not len(Bert.answers):
-            answer = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
-        else:
+    if type(Bert.answers) == list and len(Bert.answers) > Bert.answers_idx:
+        if Session.is_question_about_shop(message):
             answer = Session.get_most_suitable_ans(message, Bert.answers)
+            Bert.answers_idx += 1
+        else:
+            answer = "Przepraszam, ale nie jestem w stanie odpowiedzieć na to pytanie.\n Wychodzi ono poza moje kompetencje. Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie zapytać o inne nasze produkty."
             # answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
             # Bert.answer_idx += 1
+    elif type(Bert.answers) == list:
+            answer = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów.\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
     else:
         answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=False)
         answer = Session.full_answer(message, answer)

@@ -12,7 +12,7 @@ class BERTModel:
         print("Device:", self.device)
         self.qa_pipeline = torch.load('bert-base-multi')
         self.answers = []
-        self.answer_idx = 0
+        self.answers_idx = 0
         self.end_of_ans = 0
         self.intent = None
         self.context = None
@@ -79,7 +79,8 @@ class BERTModel:
             print(f"Answer: {score}---------- ", answer)
 
         if len(self.answers) > 1:
-            self.answers = self.answers[:-1]
+            self.answers.pop()
+            print("Bert.answers: ", self.answers)
 
         return self.answers
 
