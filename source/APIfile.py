@@ -60,6 +60,9 @@ def send_fresh_message():
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'inne':
         answer = 'Niestety nie jestem w stanie odpowiedzieć na to pytanie, proszę zadaj je w inny sposób, albo zapytaj o coś innego.'
+        messages.append([answer, 'bot'])
+        return jsonify({'query': message,
+                        'answer': answer})
     else:
         # handling GPT unavailability case
         data = all_context
