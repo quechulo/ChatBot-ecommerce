@@ -2,6 +2,7 @@
 /source/bert-base-multi
 __pycache__/
 /source/__pycache__/
+/materials
 .idea
 key.txt
 passwords.py
