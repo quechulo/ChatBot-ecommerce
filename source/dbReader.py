@@ -173,19 +173,32 @@ def add_dict_to_file(file_path, product):
         file.write(line_to_append)
 
 
-# Set up the connection to the MongoDB Atlas database
-if __name__ == '__main__':
+def context_from_db_generator(dir_path='context_files'):
     shoes = get_all_doc('products', 'shoes')
-    write_to_file(shoes, 'shoes.txt')
+    write_to_file(shoes, 'context_files/shoes.txt')
 
     clothes = get_all_doc('products', 'clothes')
-    write_to_file(clothes, 'clothes.txt')
+    write_to_file(clothes, 'context_files/clothes.txt')
 
     about = get_all_doc('info', 'about')
-    write_about_to_file(about, 'about.txt')
+    write_about_to_file(about, 'context_files/about.txt')
 
     complaint = get_all_doc('info', 'complaints')
-    write_complaint_to_file(complaint, 'complaint.txt')
+    write_complaint_to_file(complaint, 'context_files/complaint.txt')
+
+
+if __name__ == '__main__':
+    shoes = get_all_doc('products', 'shoes')
+    write_to_file(shoes, 'context_files/shoes.txt')
+
+    clothes = get_all_doc('products', 'clothes')
+    write_to_file(clothes, 'context_files/clothes.txt')
+
+    about = get_all_doc('info', 'about')
+    write_about_to_file(about, 'context_files/about.txt')
+
+    complaint = get_all_doc('info', 'complaints')
+    write_complaint_to_file(complaint, 'context_files/complaint.txt')
 
     # test insertion to db:
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})

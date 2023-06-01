@@ -62,14 +62,16 @@ def send_fresh_message():
         answer = 'Niestety nie jestem w stanie odpowiedzieć na to pytanie, proszę zadaj je w inny sposób, albo zapytaj o coś innego.'
         messages.append([answer, 'bot'])
         return jsonify({'query': message,
-                        'answer': answer})
+                        'answer': answer,
+                        'sender': 'bot'})
     else:
         # handling GPT unavailability case
         data = all_context
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
-        messages.append([answer, 'bot'])
+        messages.append([answer, 'bert'])
         return jsonify({'query': message,
-                        'answer': answer})
+                        'answer': answer,
+                        'sender': 'bert'})
 
     Bert.context = data
     if type(answer) == list:
@@ -80,7 +82,8 @@ def send_fresh_message():
 
     messages.append([answer, 'bot'])
     return jsonify({'query': message,
-                    'answer': answer})
+                    'answer': answer,
+                    'sender': 'bot'})
 
 
 @app.route('/send', methods=['POST'])
@@ -99,10 +102,11 @@ def send_message():
             answer = "Przepraszam, ale nie jestem w stanie odpowiedzieć na to pytanie.\n Wychodzi ono poza moje kompetencje. Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie zapytać o inne nasze produkty."
             # answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
             # Bert.answer_idx += 1
-    elif type(Bert.answers) == list:
+    elif len(Bert.answers) <= Bert.answers_idx and Bert.answers:
             answer = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów.\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
     else:
         answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=False)
+        print("Bert simple answer inside /send", answer)
         answer = Session.full_answer(message, answer)
 
     messages.append([answer, 'bot'])

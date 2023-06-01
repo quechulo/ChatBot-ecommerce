@@ -1,0 +1,25 @@
+Witamy w naszym sklepie Buy Stuff. W naszej ofercie posiadamy wiele markowych butów i ubrań. Oferujemy najlepsze ceny i staramy się obsługiwać klienta na najwyższym poziomie. Oferujemy darmowe zwroty do 14-dni po odbiorze zamówienia..
+Możesz skontaktować się z nami od poniedziłku do piątku w godzinach 9.00-16.00 dzwoniąc pod numer: 123-456-789, bądź pisząc maila na adres: bok@buystuff.pl
+Biuro stacjonarne znajduje się pod adresem: 00-000 Zakupowo 123, Mazowieckie, Polska
+(*link*http://localhost:3000/about*link*)
+Oferujemy darmowe zwroty do 14-dni po odbiorze zamówienia. Wszystkie reklamacje prosimy zgłaszać drogą mailową na adres: bok@buystuff.pl, bądź dzwoniąc na numer: 123-456-789
+(*link*http://localhost:3000/zwroty*link*)
+buty męskie black Nike Air Jordan 1 Mid cena 489,99PLN ,  (*link*http://localhost:3000/produkty/buty/642062462bd782638b17cbb0*link*).
+buty męskie white Nike Air Force 1 '07 cena 699,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425ddde723bff480ca98e30*link*).
+buty męskie black, red Nike Air Jordan 1 Mid cena 599,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425dee8723bff480ca98e31*link*).
+buty męskie white, blue Reebok Club C 85 cena 269,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425df9c723bff480ca98e32*link*).
+buty damskie gray Reebok Nano X3 cena 499,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e0c0723bff480ca98e33*link*).
+buty damskie green Reebok CLASSIC LEATHER cena 379,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e161723bff480ca98e34*link*).
+klapki unisex green Birkenstock ARIZONA cena 209,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e2d7723bff480ca98e35*link*).
+kurtka damska dżins Levi's Kurtka dżinsowa damska cena 270PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454bea391b8074c03cc6f6e*link*).
+kurtka męska czarny Levi's Kurtka dżinsowa ocieplana Sherpa Trucker cena 339PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c05e91b8074c03cc6f6f*link*).
+kurtka męska zielony Lee Kurtka dżinsowa cena 499PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c19591b8074c03cc6f70*link*).
+kurtka damska light blue denim ONLY Kurtka dżinsowa cena 149PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c26a91b8074c03cc6f71*link*).
+dres damski czarny Puma TRAIN FAVORITES TRACKSUIT - Dres cena 332PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c39e91b8074c03cc6f72*link*).
+kurtka męska black denim Jack & Jones Kurtka dżinsowa cena 220PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c43d91b8074c03cc6f73*link*).
+dres męski szary Nike Nike Dres męski Nike Park 20 cena 330PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c52891b8074c03cc6f74*link*).
+koszulka męska szary Pier One Pier One 3 PACK - T-shirt cena 89PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c5ea91b8074c03cc6f75*link*).
+koszulka męska biały/niebieski Wrangler Wrangler SIGN OFF TEE 2 PACK - T-shirt cena 106PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c68f91b8074c03cc6f76*link*).
+koszulka damska biały/czarny Even&Odd Even&Odd 2 PACK CROPPED TANK - T-shirt cena 89PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c71e91b8074c03cc6f77*link*).
+koszulka damska biały/czarny Hollister Co. Hollister Co. EASY BASIC 3 PACK - T-shirt cena 199PLN ,  (*link*http://localhost:3000/produkty/ubrania/6454c79991b8074c03cc6f78*link*).
+
