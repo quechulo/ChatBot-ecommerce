@@ -53,7 +53,7 @@ class ChatWithGPT:
     def full_answer(self, question, answer):
         quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
         full_ans = self.ask_chat_gpt(quest, write_log=True)
-        if "available" in full_ans:
+        if "unavailable" in full_ans:
             print("GPT was not able to create full answer")
             return answer
 
@@ -62,7 +62,7 @@ class ChatWithGPT:
     def get_most_suitable_ans(self, question, answers):
         quest = f"Odpowiedz na pytanie '{question}' pełnym zdaniem, wybierając spośród odpowiedzi: '{answers}' jedną najbardziej dopasowaną do pytania."
         ans = self.ask_chat_gpt(quest, write_log=True)
-        if "available" in ans:
+        if "unavailable" in ans:
             print("GPT was not able to get most suitable answer")
             return answers[0]
         return ans
@@ -79,7 +79,7 @@ class ChatWithGPT:
                 messages=self.message_log
             )
         except:
-            return "Unfortunately Chatgpt is unavailable right now :("
+            return "unfortunately chatgpt is unavailable right now :("
 
         assistant_reply = completion.choices[0].message.content
         self.message_log.append({"role": "assistant", "content": f"{assistant_reply}"})
