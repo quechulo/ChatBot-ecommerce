@@ -47,7 +47,7 @@ class ChatWithGPT:
         else:
             answer = False
 
-        print("is_question_about_shop ",answer)
+        print("is_question_about_shop ", answer)
         return answer
 
     def full_answer(self, question, answer):
