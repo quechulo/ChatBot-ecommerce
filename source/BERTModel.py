@@ -100,6 +100,20 @@ class BERTModel:
         else:
             return result
 
+    def get_order_details(self, context, query, user, only_ans=True):
+        result = self.qa_pipeline({
+            'context': context,
+            'question': query
+        })
+        start_idx = int(result['end'])
+
+        # Logic to verify whether answer is users order
+
+        if only_ans:
+            return result['answer']
+        else:
+            return result
+
 # if __name__ == '__main__':
 #     Bert = BERTModel()
 #     message = 'Szukam butów damskich'

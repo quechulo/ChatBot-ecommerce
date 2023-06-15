@@ -4,8 +4,7 @@ from flask_cors import CORS
 from ChatWithGPT import ChatWithGPT
 from BERTModel import BERTModel
 from loadContexts import load_file, load_all_files
-
-
+from source.orderQueryHandler import order_query
 
 app = Flask(__name__)
 CORS(app)
@@ -39,6 +38,7 @@ def send_fresh_message():
     data_req = request.get_json()
     message = data_req['message']
     sender = data_req['sender']
+    user_email = data_req['userEmail']
     messages.append([message, sender])
 
     intent = Session.classify_intent(message)
@@ -54,7 +54,12 @@ def send_fresh_message():
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'zamówienia':
         data = orders
-        answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=False)
+        answer = order_query(user_email, message)
+        answer = Session.full_answer(message, answer)
+        messages.append([answer, 'bot'])
+        return jsonify({'query': message,
+                        'answer': answer,
+                        'sender': 'order_query'})
     elif Session.intent == 'reklamacje':
         data = complaint
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
