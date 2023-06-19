@@ -32,7 +32,7 @@ def order_query(email, message):
         else:
             return 'Niestety nie mogę udzielić informacji o tym zamówieniu. Skorzystaj z innego konta.'
     else:
-        return 'Pamiętaj aby pytanie dotyczące zamówienia miało formę: "Jaki jest numer zamówienia <id_zamówienia>".'
+        return 'Pamiętaj aby pytanie dotyczące zamówienia miało formę: "Jaki jest status zamówienia <id_zamówienia>".'
 
 
 def handle_message(msg):

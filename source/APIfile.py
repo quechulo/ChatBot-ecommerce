@@ -39,6 +39,7 @@ def send_fresh_message():
     message = data_req['message']
     sender = data_req['sender']
     user_email = data_req['userEmail']
+    print('user email: ', user_email)  # TODO line just for testing!
     messages.append([message, sender])
 
     intent = Session.classify_intent(message)
@@ -53,10 +54,10 @@ def send_fresh_message():
         data = about
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'zamówienia':
-        data = orders
         answer = order_query(user_email, message)
         answer = Session.full_answer(message, answer)
         messages.append([answer, 'bot'])
+        # Special sender in return statement handling
         return jsonify({'query': message,
                         'answer': answer,
                         'sender': 'order_query'})
