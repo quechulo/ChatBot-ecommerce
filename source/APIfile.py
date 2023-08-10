@@ -5,6 +5,7 @@ from ChatWithGPT import ChatWithGPT
 from BERTModel import BERTModel
 from loadContexts import load_file, load_all_files
 from source.orderQueryHandler import order_query
+from dbReader import insert_conversation_to_db
 
 app = Flask(__name__)
 CORS(app)
@@ -122,8 +123,11 @@ def send_message():
 
 @app.route('/fresh-conversation', methods=['GET'])
 def fresh_conversation():
+    #  store conversation to DB
+    if len(messages) > 0:
+        insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     init_new_context()
-    # insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
+
     return jsonify({'status': "Chatbot context was restarted"})
 
 @app.route('/receive', methods=['GET'])

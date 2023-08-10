@@ -187,7 +187,7 @@ def context_from_db_generator(dir_path='context_files'):
     write_complaint_to_file(complaint, 'context_files/complaint.txt')
 
 
-if __name__ == '__main__':
+def update_txt_files():
     shoes = get_all_doc('products', 'shoes')
     write_to_file(shoes, 'context_files/shoes.txt')
 
@@ -200,5 +200,6 @@ if __name__ == '__main__':
     complaint = get_all_doc('info', 'complaints')
     write_complaint_to_file(complaint, 'context_files/complaint.txt')
 
-    # test insertion to db:
-    # insert_conversation_to_db('chatbot', 'conversations', {'messages': ['hello chatbot!', 'Hello human friend!']})
+
+if __name__ == '__main__':
+    update_txt_files()

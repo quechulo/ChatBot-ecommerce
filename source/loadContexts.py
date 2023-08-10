@@ -31,11 +31,11 @@ def load_all_files(input_filename):
     return all_context
 
 
+def update_aggregated_txt_file():
+    load_all_files('all_context.txt')
+
+
 if __name__ == '__main__':
-    r = load_all_files('all_context.txt')
-    print(r)
-    # path = os.path.join("context_files", "all_context.txt")
-    # print(path)
-    # print(os.path.exists(path))
+    update_aggregated_txt_file()
 
 

@@ -1,7 +1,7 @@
-buty męskie black Nike Air Jordan 1 Mid cena 489,99PLN ,  (*link*http://localhost:3000/produkty/buty/642062462bd782638b17cbb0*link*).
-buty męskie white Nike Air Force 1 '07 cena 699,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425ddde723bff480ca98e30*link*).
-buty męskie black, red Nike Air Jordan 1 Mid cena 599,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425dee8723bff480ca98e31*link*).
-buty męskie white, blue Reebok Club C 85 cena 269,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425df9c723bff480ca98e32*link*).
-buty damskie gray Reebok Nano X3 cena 499,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e0c0723bff480ca98e33*link*).
-buty damskie green Reebok CLASSIC LEATHER cena 379,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e161723bff480ca98e34*link*).
-klapki unisex green Birkenstock ARIZONA cena 209,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e2d7723bff480ca98e35*link*).
+buty męskie czarne Nike Air Jordan 1 Mid cena 489,99PLN ,  (*link*http://localhost:3000/produkty/buty/642062462bd782638b17cbb0*link*).
+buty męskie białe Nike Air Force 1 '07 cena 699,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425ddde723bff480ca98e30*link*).
+buty męskie czarne, czerwone Nike Air Jordan 1 Mid cena 599,99PLN ,  (*link*http://localhost:3000/produkty/buty/6425dee8723bff480ca98e31*link*).
+buty męskie białe, niebieskie Reebok Club C 85 cena 269,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425df9c723bff480ca98e32*link*).
+buty damskie szare Reebok Nano X3 cena 499,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e0c0723bff480ca98e33*link*).
+buty damskie zielone Reebok CLASSIC LEATHER cena 379,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e161723bff480ca98e34*link*).
+klapki unisex zielone Birkenstock ARIZONA cena 209,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e2d7723bff480ca98e35*link*).

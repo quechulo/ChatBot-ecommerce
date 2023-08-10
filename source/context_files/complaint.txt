@@ -1,2 +1,3 @@
-Oferujemy darmowe zwroty do 14-dni po odbiorze zamówienia. Wszystkie reklamacje prosimy zgłaszać drogą mailową na adres: bok@buystuff.pl, bądź dzwoniąc na numer: 123-456-789
+Oferujemy darmowe zwroty do 14-dni po odbiorze zamówienia. Wszystkie reklamacje prosimy zgłaszać drogą mailową na adres: bok@buystuff.pl, bądź dzwoniąc na numer: 123-456-789 Możesz skontaktować się z nami od poniedziłku do piątku w godzinach 9.00-16.00 dzwoniąc pod numer: 123-456-789, bądź pisząc maila na adres: bok@buystuff.pl
+Biuro stacjonarne znajduje się pod adresem: 00-000 Zakupowo 123, Mazowieckie, Polska
 (*link*http://localhost:3000/zwroty*link*)
