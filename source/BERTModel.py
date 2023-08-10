@@ -11,7 +11,7 @@ class BERTModel:
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
         print("Device:", self.device)
         self.qa_pipeline = torch.load('bert-base-multi')
-        self.answers = []
+        self.answers = None
         self.answers_idx = 0
         self.end_of_ans = 0
         self.intent = None
@@ -41,9 +41,14 @@ class BERTModel:
 
         result['answer'] = context[cut_start:cut_end - 5]
 
+        link_to_product = ''
         if product_link:
             link_to_product = context[start_idx:].split('*link*')[1]
-            result['answer'] = result['answer'] + ' link do produktu: ' + link_to_product
+            result['link'] = link_to_product
+
+            # result['answer'] = result['answer'] + ' link do produktu: ' + link_to_product
+        if only_ans and product_link:
+            return {'answer': result['answer'], 'link': result['link']}
 
         if only_ans:
             return result['answer']
@@ -57,7 +62,7 @@ class BERTModel:
 
         while score > 0.0001:
             answer = self.get_answer(context, query, only_ans=False, product_link=True)
-            self.answers.append(answer['answer'])
+            self.answers.append({'answer': answer['answer'], 'link': answer['link']})
 
             start_idx = int(answer['start'])
             end_idx = int(answer['end'])
@@ -91,12 +96,14 @@ class BERTModel:
         })
         start_idx = int(result['end'])
 
+        result['link'] = ""
         if page_link:
             link_to_page = context[start_idx:].split('*link*')[1]
-            result['answer'] = result['answer'] + ' link do strony: ' + link_to_page
+            result['link'] = link_to_page
+            # result['answer'] = result['answer'] + ' link do strony: ' + link_to_page
 
         if only_ans:
-            return result['answer']
+            return {'answer': result['answer'], 'link': result['link']}
         else:
             return result
 
@@ -114,10 +121,11 @@ class BERTModel:
         else:
             return result
 
-# if __name__ == '__main__':
-#     Bert = BERTModel()
-#     message = 'Szukam butów damskich'
-#     data = load_file('shoes.txt')
-#
-#     Bert.get_multiple_answers(context=data, query=message)
-#     print("Answers: \n", Bert.answers)
+if __name__ == '__main__':
+    Bert = BERTModel()
+    message = 'Szukam butów damskich'
+    data = load_file('shoes.txt')
+
+    x = Bert.get_simple_answer(context=data, query=message)
+    print(x)
+    print("Answers: \n", Bert.answers)

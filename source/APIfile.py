@@ -41,7 +41,7 @@ def send_fresh_message():
     sender = data_req['sender']
     user_email = data_req['userEmail']
     print('user email: ', user_email)  # TODO line just for testing!
-    messages.append([message, sender])
+    messages.append([message, sender, ""])
 
     intent = Session.classify_intent(message)
     print(intent)
@@ -57,7 +57,7 @@ def send_fresh_message():
     elif Session.intent == 'zamówienia':
         answer = order_query(user_email, message)
         answer = Session.full_answer(message, answer)
-        messages.append([answer, 'bot'])
+        messages.append([answer, 'bot', ""])
         # Special sender in return statement handling
         return jsonify({'query': message,
                         'answer': answer,
@@ -67,7 +67,7 @@ def send_fresh_message():
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
     elif Session.intent == 'inne':
         answer = 'Niestety nie jestem w stanie odpowiedzieć na to pytanie, proszę zadaj je w inny sposób, albo zapytaj o coś innego.'
-        messages.append([answer, 'bot'])
+        messages.append([answer, 'bot', ""])
         return jsonify({'query': message,
                         'answer': answer,
                         'sender': 'bot'})
@@ -75,21 +75,27 @@ def send_fresh_message():
         # handling GPT unavailability case
         data = all_context
         answer = Bert.get_simple_answer(context=data, query=message, only_ans=True, page_link=True)
-        messages.append([answer, 'bert'])
+        messages.append([answer['answer'], 'bert', answer['link']])
         return jsonify({'query': message,
-                        'answer': answer,
+                        'answer': answer['answer'],
+                        'link': answer['link'],
                         'sender': 'bert'})
 
     Bert.context = data
     if type(answer) == list:
-        answer = Session.full_answer(message, answer[Bert.answers_idx])
-        Bert.answers.pop(Bert.answers_idx)
+        ans = Session.full_answer(message, answer[0]['answer'])
+        link = answer[Bert.answers_idx]['link']
+        answer = {'answer': ans, 'link': link}
+        Bert.answers.pop(0)
     else:
-        answer = Session.full_answer(message, answer)
+        ans = Session.full_answer(message, answer['answer'])
+        link = answer['link']
+        answer = {'answer': ans, 'link': link}
 
-    messages.append([answer, 'bot'])
+    messages.append([answer['answer'], 'bot', answer['link']])
     return jsonify({'query': message,
-                    'answer': answer,
+                    'answer': answer['answer'],
+                    'link': answer['link'],
                     'sender': 'bot'})
 
 
@@ -98,34 +104,45 @@ def send_message():
     data_req = request.get_json()
     message = data_req['message']
     sender = data_req['sender']
-    messages.append([message, sender])
+    messages.append([message, sender, ""])
 
     context = Bert.context
-    if type(Bert.answers) == list and len(Bert.answers) > Bert.answers_idx:
+    if type(Bert.answers) == list and len(Bert.answers) > 0:
         if Session.is_question_about_shop(message):
             answer = Session.get_most_suitable_ans(message, Bert.answers)
-            Bert.answers_idx += 1
+            print(f"selected index {answer['idx_to_rm']} from array {Bert.answers}")
+            try:
+                Bert.answers.pop(answer['idx_to_rm'])
+            except:
+                print(f"unable to pop index {answer['idx_to_rm']} from array {Bert.answers}")
+            ans = answer['answer']
+            link = answer['link']
         else:
-            answer = "Przepraszam, ale nie jestem w stanie odpowiedzieć na to pytanie.\n Wychodzi ono poza moje kompetencje. Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie zapytać o inne nasze produkty."
+            ans = "Przepraszam, ale nie jestem w stanie odpowiedzieć na to pytanie.\n Wychodzi ono poza moje kompetencje. Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie zapytać o inne nasze produkty."
+            link = ""
             # answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
             # Bert.answer_idx += 1
-    elif len(Bert.answers) <= Bert.answers_idx and Bert.answers:
-            answer = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów.\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
+    elif type(Bert.answers) == list and len(Bert.answers) == 0:
+        ans = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów.\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
+        link = ""
     else:
-        answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=False)
+        answer = Bert.get_simple_answer(context=context, query=message, only_ans=True, page_link=True)
         print("Bert simple answer inside /send", answer)
-        answer = Session.full_answer(message, answer)
+        ans = Session.full_answer(message, answer['answer'])
+        link = answer['link']
 
-    messages.append([answer, 'bot'])
+
+    messages.append([ans, 'bot',  link])
     return jsonify({'query': message,
-                    'answer': answer})
+                    'answer': ans,
+                    'link': link})
 
 
 @app.route('/fresh-conversation', methods=['GET'])
 def fresh_conversation():
     #  store conversation to DB
-    if len(messages) > 0:
-        insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
+    # if len(messages) > 0:
+    #     insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     init_new_context()
 
     return jsonify({'status': "Chatbot context was restarted"})

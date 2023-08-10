@@ -1,3 +1,5 @@
+import Levenshtein
+from fuzzywuzzy import fuzz
 import openai
 
 # load and set our key
@@ -7,7 +9,7 @@ openai.api_key = open("../key.txt", "r").read().strip("\n")
 class ChatWithGPT:
     def __init__(self):
         self.message_log = []
-        self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta."})
+        self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta. Odpowiadasz na zadane pytania na temat, nie wymyślasz rzeczy o których nie wiesz."})
         # tutaj dodac wiadomosc aby chatgpt wczul sie w role wirtualnego asystenta na stronie ecommerce
         self.intent = None
 
@@ -16,7 +18,7 @@ class ChatWithGPT:
         return question
 
     def classify_intent(self, question):
-        quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię."
+        quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię. Przykład: pytanie:'Szukam męskich butów sportowych', odpowiedź:'buty'"
         intention = self.ask_chat_gpt(quest, write_log=False)
         intention = intention.lower()
         if "buty" in intention:
@@ -36,7 +38,7 @@ class ChatWithGPT:
         return intention
 
     def is_question_about_shop(self, question):
-        quest = f"Aktualny temat rozmowy to: {self.intent}. Odpowiedz tak lub nie, czy pytanie '{question}' obejmuje kompetencje chatbota na stronie ecommerce rozmawiając na podany wcześniej temat? W odpowiedzi napisz jedynie tak lub nie."
+        quest = f"Aktualny temat rozmowy to: {self.intent}. Odpowiedz tak lub nie, czy pytanie, bądź stwierdzenie: '{question}' mogłoby paść podczas konwersacji z chatbotem na stronie ecommerce. W odpowiedzi napisz jedynie tak lub nie."
         answer = self.ask_chat_gpt(quest, write_log=False)
         answer = answer.lower()
         print("is_question_about_shop: ", answer)
@@ -51,7 +53,7 @@ class ChatWithGPT:
         return answer
 
     def full_answer(self, question, answer):
-        quest = f"odpowiedz na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'."
+        quest = f"napisz odpowiedź na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'. W odpowiedzi nie zawieraj odpowiedzi twierdzącej o tym że ją napiszesz. Staraj się aby odpowiedzi nie były za każdym razem tak samo skonstruowane. Miej na uwadze, że po odpoowiedzi, którą wygenerujesz będzie wstawiony link do produktu lub strony, jednak nie wprowadzaj tam tekstu który ma udawać link bądź nie wstawiaj miejsca do jego wstawienia. Przykład zły: 'Sprawdź je tutaj: link do produktu', przykład dobry: 'Zapoznaj się z nim tutaj:'"
         full_ans = self.ask_chat_gpt(quest, write_log=True)
         if "unavailable" in full_ans:
             print("GPT was not able to create full answer")
@@ -60,12 +62,32 @@ class ChatWithGPT:
         return full_ans
 
     def get_most_suitable_ans(self, question, answers):
-        quest = f"Odpowiedz na pytanie '{question}' pełnym zdaniem, wybierając spośród odpowiedzi: '{answers}' jedną najbardziej dopasowaną do pytania."
+        values = []
+        for entry in answers:
+            values.append(entry['answer'])
+        quest = f"Odpowiedz na pytanie '{question}' pełnym zdaniem, wybierając spośród odpowiedzi: '{values}' jedną najbardziej dopasowaną do pytania."
         ans = self.ask_chat_gpt(quest, write_log=True)
+        link = ""
+
         if "unavailable" in ans:
             print("GPT was not able to get most suitable answer")
+            answers[0]['link'] = link
+            answers[0]['idx_to_rm'] = 0
             return answers[0]
-        return ans
+
+
+        #  Getting link to chosen answer by calculating differences between sequences
+        similarity_dist = [(string, fuzz.partial_ratio(ans, string)) for string in values]
+        most_similar = max(similarity_dist, key=lambda x: x[1])
+        idx_of_link = values.index(most_similar[0])
+
+        try:
+            link = answers[idx_of_link]['link']
+        except:
+            print("get_most_suitable_ans FAILED")
+
+
+        return {'answer': ans, 'link': link, 'idx_to_rm': idx_of_link}
 
     def ask_chat_gpt(self, question, write_log=True):
         try:
@@ -79,7 +101,7 @@ class ChatWithGPT:
                 messages=self.message_log
             )
         except:
-            return "unfortunately chatgpt is unavailable right now :("
+            return "unfortunately GPT is unavailable right now :("
 
         assistant_reply = completion.choices[0].message.content
         self.message_log.append({"role": "assistant", "content": f"{assistant_reply}"})
