@@ -46,5 +46,5 @@ def handle_message(msg):
 
 
 if __name__ == '__main__':
-    # print(order_query('fecosen627@anwarb.com', 'jaki jest numer zamówienia 648af522da7c8efb6c295f0b?'))
-    print(order_query('fecosen627@anwarb.com', 'jaki jest numer zamówienia 648af522da7c8efb6c295f0b?'))
+    # print(order_query('fecosen627@anwarb.com', 'jaki jest status zamówienia 648af522da7c8efb6c295f0b?'))
+    print(order_query('fecosen627@anwarb.com', 'jaki jest status zamówienia 648af522da7c8efb6c295f0b?'))
