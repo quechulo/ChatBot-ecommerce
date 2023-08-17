@@ -1,6 +1,6 @@
-from ChatWithGPT import ChatWithGPT
-from source.BERTModel import BERTModel
-from loadContexts import load_shoes
+from app.ChatWithGPT import ChatWithGPT
+from app.BERTModel import BERTModel
+from app.loadContexts import load_shoes
 
 import time
 

@@ -1,9 +1,13 @@
-import Levenshtein
+import os
+
 from fuzzywuzzy import fuzz
 import openai
+import os
+from dotenv import load_dotenv
 
 # load and set our key
-openai.api_key = open("../key.txt", "r").read().strip("\n")
+load_dotenv()
+openai.api_key = os.environ.get('OPEN_AI_KEY')
 
 
 class ChatWithGPT:

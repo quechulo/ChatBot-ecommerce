@@ -1,6 +1,4 @@
-from pymongo import MongoClient
-from passwords import password
-from source.dbReader import get_connection_reader, access_db_collection
+from app.dbReader import get_connection_reader, access_db_collection
 from bson.objectid import ObjectId
 import re
 

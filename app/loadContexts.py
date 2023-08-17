@@ -1,15 +1,16 @@
 import os
 
-dir_path = "context_files"
+dir_path = "../source/context_files"
+current_directory = os.path.dirname(__file__)
 def load_file(filename):
-    path = os.path.join(dir_path, filename)
+    path = os.path.join(current_directory, dir_path, filename)
     with open(path, 'r', encoding="utf-8") as file:
         data = file.read()
     return data
 
 
 def load_all_files(input_filename):
-    path = os.path.join(dir_path, input_filename)
+    path = os.path.join(current_directory, dir_path, input_filename)
     try:
         with open(path, "w", encoding="utf-8") as all_context:
             # Use the truncate() method to erase the contents

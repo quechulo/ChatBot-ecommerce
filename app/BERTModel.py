@@ -1,16 +1,18 @@
 import torch
-
-
-from loadContexts import load_file, load_all_files
-from dbReader import insert_conversation_to_db
-
+from transformers import pipeline
+from app.loadContexts import load_file, load_all_files
 
 
 class BERTModel:
     def __init__(self):
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
         print("Device:", self.device)
-        self.qa_pipeline = torch.load('bert-base-multi')
+        self.qa_pipeline = pipeline(
+                    "question-answering",
+                    model="henryk/bert-base-multilingual-cased-finetuned-polish-squad2",
+                    tokenizer="henryk/bert-base-multilingual-cased-finetuned-polish-squad2"
+                )
+        # self.qa_pipeline = torch.load('../source/bert-base-multi')
         self.answers = None
         self.answers_idx = 0
         self.end_of_ans = 0

@@ -4,5 +4,6 @@ __pycache__/
 /source/__pycache__/
 /materials
 .idea
+.env
 key.txt
 passwords.py

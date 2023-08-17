@@ -1,22 +1,11 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-
+from flask import Blueprint, request, jsonify
 from app.ChatWithGPT import ChatWithGPT
 from app.BERTModel import BERTModel
 from app.loadContexts import load_file, load_all_files
+
 from source.orderQueryHandler import order_query
 
-
-def create_app(testing=False):
-    app = Flask(__name__)
-    CORS(app)
-    CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}})
-
-    if testing:
-        app.config['TESTING'] = True
-        app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF for testing
-
-    return app
+bp = Blueprint('main', __name__)
 
 
 def init_new_context():
@@ -41,7 +30,15 @@ def init_new_context():
     all_context = load_all_files('all_context.txt')
 
 
-@app.route('/send-fresh', methods=['POST'])
+init_new_context()
+
+
+@bp.route('/')
+def home():
+    return "Welcome to the BuyStuff Chatbot's API"
+
+
+@bp.route('/send-fresh', methods=['POST'])
 def send_fresh_message():
     data_req = request.get_json()
     message = data_req['message']
@@ -106,7 +103,7 @@ def send_fresh_message():
                     'sender': 'bot'})
 
 
-@app.route('/send', methods=['POST'])
+@bp.route('/send', methods=['POST'])
 def send_message():
     data_req = request.get_json()
     message = data_req['message']
@@ -145,7 +142,7 @@ def send_message():
                     'link': link})
 
 
-@app.route('/fresh-conversation', methods=['GET'])
+@bp.route('/fresh-conversation', methods=['GET'])
 def fresh_conversation():
     #  store conversation to DB
     # if len(messages) > 0:
@@ -154,13 +151,8 @@ def fresh_conversation():
 
     return jsonify({'status': "Chatbot context was restarted"})
 
-@app.route('/receive', methods=['GET'])
+@bp.route('/receive', methods=['GET'])
 def receive_messages():
     # insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     return jsonify({'messages': messages})
-
-
-if __name__ == '__main__':
-    init_new_context()
-    app.run(debug=True)
 
