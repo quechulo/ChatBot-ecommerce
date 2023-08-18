@@ -40,11 +40,14 @@ def home():
 
 @bp.route('/send-fresh', methods=['POST'])
 def send_fresh_message():
-    data_req = request.get_json()
-    message = data_req['message']
-    sender = data_req['sender']
-    user_email = data_req['userEmail']
-    print('user email: ', user_email)  # TODO line just for testing!
+    try:
+        data_req = request.get_json()
+        message = data_req['message']
+        sender = data_req['sender']
+        user_email = data_req['userEmail']
+    except:
+        return {'error': 'Not proper request structure provided'}, 400
+    # print('user email: ', user_email)  # TODO line just for testing!
     messages.append([message, sender, ""])
 
     intent = Session.classify_intent(message)
@@ -105,9 +108,12 @@ def send_fresh_message():
 
 @bp.route('/send', methods=['POST'])
 def send_message():
-    data_req = request.get_json()
-    message = data_req['message']
-    sender = data_req['sender']
+    try:
+        data_req = request.get_json()
+        message = data_req['message']
+        sender = data_req['sender']
+    except:
+        return {'error': 'Not proper request structure provided'}, 400
     messages.append([message, sender, ""])
 
     context = Bert.context
