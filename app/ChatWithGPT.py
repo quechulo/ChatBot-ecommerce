@@ -57,7 +57,7 @@ class ChatWithGPT:
         return answer
 
     def full_answer(self, question, answer):
-        quest = f"napisz odpowiedź na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'. W odpowiedzi nie zawieraj odpowiedzi twierdzącej o tym że ją napiszesz. Staraj się aby odpowiedzi nie były za każdym razem tak samo skonstruowane. Miej na uwadze, że po odpoowiedzi, którą wygenerujesz będzie wstawiony link do produktu lub strony, jednak nie wprowadzaj tam tekstu który ma udawać link bądź nie wstawiaj miejsca do jego wstawienia. Przykład zły: 'Sprawdź je tutaj: link do produktu', przykład dobry: 'Zapoznaj się z nim tutaj:'"
+        quest = f"napisz odpowiedź na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'. W odpowiedzi nie zawieraj odpowiedzi twierdzącej o tym że ją napiszesz. Staraj się aby odpowiedzi nie były za każdym razem tak samo skonstruowane. Miej na uwadze, że po odpoowiedzi, którą wygenerujesz będzie wstawiony link do produktu lub strony, jednak nie wprowadzaj tam tekstu który ma udawać link bądź nie wstawiaj miejsca do jego wstawienia. Przykład zły: 'Sprawdź je tutaj: link do produktu', przykład dobry: 'Zapoznaj się z nim tutaj:'. Takim zwrotem wiadomość ma się kończyć. Kiedy pytanie dotyczy statusu zamówienia, nie będzie żadnego linku, więc zakończ zdanie mając to na uwadze."
         full_ans = self.ask_chat_gpt(quest, write_log=True)
         if "unavailable" in full_ans:
             print("GPT was not able to create full answer")

@@ -25,7 +25,7 @@ def order_query(email, message):
 
     if valid_id:
         doc = get_document(order_id)
-        if doc['email'] == email:
+        if doc and doc['email'] == email:
             return doc['status']
         else:
             return 'Niestety nie mogę udzielić informacji o tym zamówieniu. Skorzystaj z innego konta.'
