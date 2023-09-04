@@ -14,7 +14,6 @@ class ChatWithGPT:
     def __init__(self):
         self.message_log = []
         self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta. Odpowiadasz na zadane pytania na temat, nie wymyślasz rzeczy o których nie wiesz."})
-        # tutaj dodac wiadomosc aby chatgpt wczul sie w role wirtualnego asystenta na stronie ecommerce
         self.intent = None
 
     def format_query(self, question):
@@ -57,7 +56,7 @@ class ChatWithGPT:
         return answer
 
     def full_answer(self, question, answer):
-        quest = f"napisz odpowiedź na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'. W odpowiedzi nie zawieraj odpowiedzi twierdzącej o tym że ją napiszesz. Staraj się aby odpowiedzi nie były za każdym razem tak samo skonstruowane. Miej na uwadze, że po odpoowiedzi, którą wygenerujesz będzie wstawiony link do produktu lub strony, jednak nie wprowadzaj tam tekstu który ma udawać link bądź nie wstawiaj miejsca do jego wstawienia. Przykład zły: 'Sprawdź je tutaj: link do produktu', przykład dobry: 'Zapoznaj się z nim tutaj:'. Takim zwrotem wiadomość ma się kończyć. Kiedy pytanie dotyczy statusu zamówienia, nie będzie żadnego linku, więc zakończ zdanie mając to na uwadze."
+        quest = f"napisz odpowiedź na pytanie '{question}' pełnym zdaniem, gdzie odpowiedzią jest '{answer}'. W odpowiedzi nie zawieraj odpowiedzi twierdzącej o tym, że ją napiszesz. Staraj się, aby odpowiedzi nie były za każdym razem tak samo skonstruowane. Miej na uwadze, że po odpowiedzi, którą wygenerujesz będzie wstawiony link do produktu lub strony, jednak nie wprowadzaj tam tekstu który ma udawać link bądź nie wstawiaj miejsca do jego wstawienia. Przykład zły: 'Sprawdź je tutaj: link do produktu', przykład dobry: 'Zapoznaj się z nim tutaj:', przykład dobry: 'Więcej informacji znajdziesz tu:'. Takim zwrotem wiadomość ma się kończyć. Kiedy pytanie dotyczy statusu zamówienia, nie będzie żadnego linku, więc zakończ zdanie mając to na uwadze."
         full_ans = self.ask_chat_gpt(quest, write_log=True)
         if "unavailable" in full_ans:
             print("GPT was not able to create full answer")
