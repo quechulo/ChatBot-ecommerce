@@ -13,7 +13,7 @@ openai.api_key = os.environ.get('OPEN_AI_KEY')
 class ChatWithGPT:
     def __init__(self):
         self.message_log = []
-        self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta. Odpowiadasz na zadane pytania na temat, nie wymyślasz rzeczy o których nie wiesz."})
+        self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta. Odpowiadasz na zadane pytania na temat, korzystasz jedynie z wiedzy która jest zawarta w kontekście."})
         self.intent = None
 
     def format_query(self, question):
