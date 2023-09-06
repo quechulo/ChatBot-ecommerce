@@ -21,7 +21,7 @@ class ChatWithGPT:
         return question
 
     def classify_intent(self, question):
-        quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię. Przykład: pytanie:'Szukam męskich butów sportowych', odpowiedź:'buty'"
+        quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'status zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię. Przykład: pytanie:'Szukam męskich butów sportowych', odpowiedź:'buty'"
         intention = self.ask_chat_gpt(quest, write_log=False)
         intention = intention.lower()
         if "buty" in intention:

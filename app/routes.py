@@ -22,8 +22,6 @@ def init_new_context():
     clothes = load_file('clothes.txt')
     global about
     about = load_file('about.txt')
-    global orders
-    orders = load_file('orders.txt')
     global complaint
     complaint = load_file('complaint.txt')
     global all_context
