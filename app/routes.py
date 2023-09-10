@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.ChatWithGPT import ChatWithGPT
 from app.BERTModel import BERTModel
 from app.loadContexts import load_file, load_all_files
+from app.dbReader import insert_conversation_to_db
 
 from source.orderQueryHandler import order_query
 
@@ -45,7 +46,6 @@ def send_fresh_message():
         user_email = data_req['userEmail']
     except:
         return {'error': 'Not proper request structure provided'}, 400
-    # print('user email: ', user_email)  # TODO line just for testing!
     messages.append([message, sender, ""])
 
     intent = Session.classify_intent(message)
@@ -128,8 +128,7 @@ def send_message():
         else:
             ans = "Przepraszam, ale nie jestem w stanie odpowiedzieć na to pytanie.\n Wychodzi ono poza moje kompetencje. Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie zapytać o inne nasze produkty."
             link = ""
-            # answer = Session.full_answer(message, Bert.answers[Bert.answer_idx])
-            # Bert.answer_idx += 1
+
     elif type(Bert.answers) == list and len(Bert.answers) == 0:
         ans = "Przepraszam, ale nie mogę znaleźć więcej interesujących Cię produktów.\n Naciśnij przycisk 'Zmień temat rozmowy' i spróbuj ponownie"
         link = ""
@@ -149,14 +148,14 @@ def send_message():
 @bp.route('/fresh-conversation', methods=['GET'])
 def fresh_conversation():
     #  store conversation to DB
-    # if len(messages) > 0:
-    #     insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
+    if len(messages) > 0:
+        insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
+        print(messages)
     init_new_context()
 
     return jsonify({'status': "Chatbot context was restarted"})
 
 @bp.route('/receive', methods=['GET'])
 def receive_messages():
-    # insert_conversation_to_db('chatbot', 'conversations', {'messages': messages})
     return jsonify({'messages': messages})
 

@@ -32,11 +32,11 @@ def load_all_files(input_filename):
     return all_context
 
 
-def update_aggregated_txt_file():
-    load_all_files('all_context.txt')
+def update_aggregated_txt_file(filename):
+    load_all_files(filename)
 
 
 if __name__ == '__main__':
-    update_aggregated_txt_file()
+    update_aggregated_txt_file('all_context.txt')
 
 

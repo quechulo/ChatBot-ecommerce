@@ -1,10 +1,12 @@
 from pymongo import MongoClient
 from passwords import password, password_write
+from datetime import datetime
 
 
 def insert_conversation_to_db(database, collection_name, document):
     client = get_connection_writer()
     collection = access_db_collection(client, database, collection_name)
+    document['date'] = datetime.now()
 
     try:
         collection.insert_one(document)
@@ -75,7 +77,7 @@ def write_about_to_file(documents, file_name):
                 'address': doc['address'],
                 'email': doc['email'],
                 'hello_text': doc['hello_text'],
-                'link': 'http://localhost:3000/about',
+                'link': 'http://localhost:3000/onas',
             }
 
             add_about_to_file(file_name, content)
