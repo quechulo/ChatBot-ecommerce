@@ -5,3 +5,12 @@ buty męskie białe, niebieskie Reebok Club C 85 cena 269,00PLN ,  (*link*http:/
 buty damskie szare Reebok Nano X3 cena 499,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e0c0723bff480ca98e33*link*).
 buty damskie zielone Reebok CLASSIC LEATHER cena 379,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e161723bff480ca98e34*link*).
 klapki unisex zielone Birkenstock ARIZONA cena 209,00PLN ,  (*link*http://localhost:3000/produkty/buty/6425e2d7723bff480ca98e35*link*).
+buty damskie czarne Kappa Obuwie treningowe cena 168,00PLN ,  (*link*http://localhost:3000/produkty/buty/650334b8c686cc17850a5a43*link*).
+buty damskie różowe Kappa Sneakersy niskie cena 132,00PLN ,  (*link*http://localhost:3000/produkty/buty/65033681c686cc17850a5a44*link*).
+buty damskie różowe Champion 3 POINT LOW cena 299,00PLN ,  (*link*http://localhost:3000/produkty/buty/65033772c686cc17850a5a45*link*).
+buty damskie niebieskie Kappa Obuwie treningowe cena 139,00PLN ,  (*link*http://localhost:3000/produkty/buty/65033853c686cc17850a5a46*link*).
+buty damskie różowe Nike METCON 8 cena 269,00PLN ,  (*link*http://localhost:3000/produkty/buty/650338f1c686cc17850a5a47*link*).
+buty damskie białe, brązowe Puma KING 21 IT cena 309,00PLN ,  (*link*http://localhost:3000/produkty/buty/650339a1c686cc17850a5a48*link*).
+buty męskie białe adidas CAMPUS 2 cena 399,99PLN ,  (*link*http://localhost:3000/produkty/buty/65033b07c686cc17850a5a49*link*).
+buty męskie zielone adidas FALCON 3 0 cena 199,99PLN ,  (*link*http://localhost:3000/produkty/buty/65033bcac686cc17850a5a4a*link*).
+buty męskie czarne Puma FUTURE PLAY IT cena 139,99PLN ,  (*link*http://localhost:3000/produkty/buty/65033c82c686cc17850a5a4b*link*).

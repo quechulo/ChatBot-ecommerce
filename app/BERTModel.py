@@ -7,17 +7,26 @@ class BERTModel:
     def __init__(self):
         self.device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
         print("Device:", self.device)
-        self.qa_pipeline = pipeline(
-                    "question-answering",
-                    model="henryk/bert-base-multilingual-cased-finetuned-polish-squad2",
-                    tokenizer="henryk/bert-base-multilingual-cased-finetuned-polish-squad2"
-                )
-        # self.qa_pipeline = torch.load('../source/bert-base-multi')
         self.answers = None
         self.answers_idx = 0
         self.end_of_ans = 0
         self.intent = None
         self.context = None
+
+        # Use only when 'bert-base-multi' is IN /source folder
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        self.qa_pipeline = torch.load('source/bert-base-multi.pt')
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        
+        # Use only when 'bert-base-multi' is NOT IN /source folder
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        # self.qa_pipeline = pipeline(
+        #             "question-answering",
+        #             model="henryk/bert-base-multilingual-cased-finetuned-polish-squad2",
+        #             tokenizer="henryk/bert-base-multilingual-cased-finetuned-polish-squad2"
+        #         )
+        # torch.save(self.qa_pipeline, 'bert-base-multi.pt')
+        # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     def get_answer(self, context, query, only_ans=True, product_link=False):
         result = self.qa_pipeline({
@@ -62,7 +71,7 @@ class BERTModel:
         # Clear previous messages
         self.answers = []
 
-        while score > 0.0001:
+        while score > 0.0004 and len(self.answers) <= 5:
             answer = self.get_answer(context, query, only_ans=False, product_link=True)
             self.answers.append({'answer': answer['answer'], 'link': answer['link']})
 

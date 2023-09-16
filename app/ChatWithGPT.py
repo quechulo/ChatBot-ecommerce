@@ -1,5 +1,3 @@
-import os
-
 from fuzzywuzzy import fuzz
 import openai
 import os
@@ -15,10 +13,6 @@ class ChatWithGPT:
         self.message_log = []
         self.message_log.append({"role": "system", "content": f"Jesteś wirtualnym asystentem na stronie ecommerce BuyStuff. Zapewniasz użytkownikom strony jak najlepszą obsługę kienta. Odpowiadasz na zadane pytania na temat, korzystasz jedynie z wiedzy która jest zawarta w kontekście."})
         self.intent = None
-
-    def format_query(self, question):
-        # return question.replace('"', '')  # TODO think how to format query / if format ever
-        return question
 
     def classify_intent(self, question):
         quest = f"Zakwalifikuj pytanie '{question}' do jednej z podanych kategorii: 'buty', 'ubrania', 'status zamówienia', 'informacje o sklepie', 'reklamacje', 'inne'. W odpowiedzi podaj tylko wybraną kategorię. Przykład: pytanie:'Szukam męskich butów sportowych', odpowiedź:'buty'"
@@ -44,7 +38,6 @@ class ChatWithGPT:
         quest = f"Aktualny temat rozmowy to: {self.intent}. Odpowiedz tak lub nie, czy pytanie, bądź stwierdzenie: '{question}' mogłoby paść podczas konwersacji z chatbotem na stronie ecommerce. W odpowiedzi napisz jedynie tak lub nie."
         answer = self.ask_chat_gpt(quest, write_log=False)
         answer = answer.lower()
-        print("is_question_about_shop: ", answer)
         if "nie" in answer:
             answer = False
         elif "tak" in answer:
@@ -93,10 +86,6 @@ class ChatWithGPT:
         return {'answer': ans, 'link': link, 'idx_to_rm': idx_of_link}
 
     def ask_chat_gpt(self, question, write_log=True):
-        try:
-            question = self.format_query(question)
-        except:
-            return "Please enter valid question"
         self.message_log.append({"role": "user", "content": f"{question}"})
         try:
             completion = openai.ChatCompletion.create(

@@ -147,6 +147,7 @@ def add_dict_to_file(file_path, product):
         'jacket': 'kurtka',
         'tracksuit': 'dres',
         'tshirt': 'koszulka',
+        'hoodie': 'bluza'
     }
     gender_e = {
         'male': 'męskie',

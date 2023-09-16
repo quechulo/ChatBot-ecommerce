@@ -1,5 +1,5 @@
 /source/.idea
-/source/bert-base-multi
+/source/bert-base-multi.pt
 __pycache__/
 /source/__pycache__/
 /materials
